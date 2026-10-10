@@ -1,11 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using ViajesAPI.Models;
+using ViajesAPI.Repositories.Implementations;
+using ViajesAPI.Repositories.Interfaces;
+using ViajesAPI.Services.Implementations;
+using ViajesAPI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<ViajesContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 // Agregar inyección de dependencias
+builder.Services.AddScoped <IViajesRepository, ViajeRepository>();
+builder.Services.AddScoped <IViajeService, ViajeService>();
 
 builder.Services.AddControllers().AddJsonOptions(x =>
 {
